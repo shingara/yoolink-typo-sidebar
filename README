@@ -1,0 +1,19 @@
+h1. Yoolink Typo Sidebar
+
+This script is a plugin for Typo blog (http://typosphere.org).
+With this plugin you can display your last link bookmark by
+yoolink (http://yoolink.fr).
+
+h2. Installation
+
+download this plugin and copy it in your directory /vendor/plugin/
+
+h2. Configuration
+
+In plugin part in typo admin, the configuration of this plugin are :
+
+ * login : Your login in yoolink
+ * items limit : the number of items see in sidebar
+ * groups link by days : all bookmark are group by day
+ * Allow links in description : by default all link in description of bookmark
+   are desable. but you can activate
