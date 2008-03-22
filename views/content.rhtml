@@ -1,6 +1,6 @@
 <% if sidebar.yoolink -%>
   <div id="yoolink">
-    <h3><a href="http://<%=h sidebar.yoolink.title %>"><%=h sidebar.yoolink.title %></a></h3>
+    <h3><a href="http://yoolink.fr/people/<%=h sidebar.yoolink.login %>">Yoolink/<%=h sidebar.yoolink.login %></a></h3>
     <% (groupdate ? sidebar.yoolink.days : [{ :container => sidebar.yoolink.items }]).each do |group| -%>
     <% if groupdate -%>
     <span class="date"><%=h group[:date].to_s.to_date.strftime("%b %d") %></span>

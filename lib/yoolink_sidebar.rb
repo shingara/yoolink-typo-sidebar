@@ -13,7 +13,7 @@ class YoolinkSidebar < Sidebar
   def yoolink
     require 'ruby-debug'
     #debugger
-    @yoolink ||= Yoolink.new("http://yoolink.fr/people/#{login}/rss") rescue nil
+    @yoolink ||= Yoolink.new(login) rescue nil
   end
 
   def parse_request(contents, params)

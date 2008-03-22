@@ -5,7 +5,7 @@ require 'rexml/document'
 class Yoolink
   include REXML
 
-  attr_accessor :url, :items, :link, :title, :days
+  attr_accessor :url, :items, :link, :title, :days, :login
 
   # This object holds given information of an item
   class YoolinkItem < Struct.new(:link, :title, :description, :description_link, :date)
@@ -15,9 +15,10 @@ class Yoolink
   # Pass the url to the RSS feed you would like to keep tabs on
   # by default this will request the rss from the server right away and
   # fill the items array
-  def initialize(url, refresh = true)
+  def initialize(login, refresh = true)
     self.items  = []
-    self.url    = url
+    self.url    = "http://yoolink.fr/people/#{login}/rss"
+    self.login  = login
     self.days   = {}
     self.refresh if refresh
   end
@@ -43,15 +44,15 @@ private
     XPath.each(xml, "//item/") do |elem|
       item = YoolinkItem.new
       item.title       = XPath.match(elem, "title/text()").first.value rescue ""
-      item.link        = XPath.match(elem, "link/text()").first.value rescue ""
+      item.link        = XPath.match(elem, "guid/text()").first.value rescue ""
       item.description = XPath.match(elem, "description/text()").first.value rescue ""
-      item.date        = Time.mktime(*ParseDate.parsedate(XPath.match(elem, "dc:date/text()").first.value)) rescue Time.now
+      item.date        = Time.mktime(*ParseDate.parsedate(XPath.match(elem, "pubDate/text()").first.value)) rescue Time.now
 
       item.description_link = item.description
       item.description.gsub!(/<\/?a\b.*?>/, "") # remove all <a> tags
       items << item
     end
 
-    self.items = items.sort_by { |item| item.date }
+    self.items = items.sort_by { |item| item.date }.reverse
   end
 end
